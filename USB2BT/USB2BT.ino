@@ -102,9 +102,34 @@ KbdRptParser KbdPrs;
 MouseRptParser MousePrs;
 #endif
 
+void setupBluetoothPairing()
+{
+	// Enter command mode
+	Serial.print("$$$");
+	delay(200);
+
+	// Set serialized friendly device name
+	Serial.print("S-,Arduino RN42\r");
+	delay(500);
+
+	// Set remote bluetooth address
+	Serial.print("SR,00A053112233\r");
+	delay(500);
+
+	// Set mode: pairing Mode
+	Serial.print("SM,6\r");
+	delay(500);
+
+	// Reboot
+	Serial.print("R,1\r");
+	delay(1000);
+}
+
 void setup()
 {
 	Serial.begin(115200);
+
+	// setupBluetoothPairing();
 
 #if !defined(__MIPSEL__)
 	while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
